@@ -11,7 +11,7 @@ np.random.seed(0)
 
 t = np.linspace(0, 100, 11)
 u = [np.random.randint(-20, 20) for i in t]
-v = [np.random.randint(0, 20) for i in t]
+v = [np.random.randint(-20, 20) for i in t]
 
 # computes W_1 for two probability measures u and v
 # discretely, we need pairs (t, u(t)) and (t, v(t))

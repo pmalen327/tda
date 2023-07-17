@@ -32,6 +32,7 @@ def vert_shift(f):
         if min(f) < 0:
             vert_f = [i + abs(min(f)) for i in f]
         return vert_f
+    
     except:
         print('f has no negative values')
 
@@ -54,7 +55,8 @@ def pos_shift(f):
 
 
 #TODO
-# wrap in a main method maybe?? not sure 
+# wrap in a main method maybe?? not sure
+# generate some random data and make sure pairwise matrix works fine with W_1
     
 
 

@@ -4,16 +4,17 @@
 import numpy as np
 import pandas as pd
 import gudhi as gd
+import sklearn
+from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
 
 from random import randrange
 np.random.seed(0)
 
-t = np.linspace(0, 100, 11)
+n = 10
+t = np.linspace(0, 10, 11)
 u = [np.random.randint(-20, 20) for i in t]
 v = [np.random.randint(-20, 20) for i in t]
-
-
 
 
 # computes W_1 for two probability measures u and v
@@ -54,11 +55,19 @@ def pos_shift(f):
         print('f has no negative values')
 
 
-#TODO
-# wrap in a main method maybe?? not sure
-# generate some random data and make sure pairwise matrix works fine with W_1
-    
+test_matrix = []
+for i in range(n):
+    test_matrix.append([np.random.randint(-20, 20) for i in t])
 
+test_matrix = np.array(test_matrix)
+print(test_matrix)
+    
+# this is what it will look like, but this doesn't work
+ds = sklearn.metrics.pairwise(test_matrix, Y = None, metric = 'kulsinski')
+
+#TODO 
+# make a function that uses W_1 metric with only two inputs and fix the mesh values
+#   scikit expects a function with only two inputs and a numerical output
 
 
 

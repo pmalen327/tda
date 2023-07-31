@@ -23,7 +23,9 @@ v = [np.random.randint(-20, 20) for i in t]
 
 # args are ordered like (u(t), v(t), t, t) where t is the Dirac mass centered
 # at t
-w1 = wasserstein_distance(u, v, t, t)
+@np.vectorize
+def w1(u, v):   # the distance matrix metric arg. can only take two inputs
+    return wasserstein_distance(u, v, t, t)
 
 
 # if inf(f) is negative, we send f - inf(f) to the new value
@@ -60,14 +62,14 @@ for i in range(n):
     test_matrix.append([np.random.randint(-20, 20) for i in t])
 
 test_matrix = np.array(test_matrix)
-print(test_matrix)
     
 # this is what it will look like, but this doesn't work
-ds = sklearn.metrics.pairwise(test_matrix, Y = None, metric = 'kulsinski')
+ds = sklearn.metrics.pairwise(test_matrix, Y = None, metric = w1)
+print(ds)
 
 #TODO 
-# make a function that uses W_1 metric with only two inputs and fix the mesh values
-#   scikit expects a function with only two inputs and a numerical output
+# figure out how to fix w1 so it can be passed into ds
+
 
 
 

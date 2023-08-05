@@ -5,14 +5,16 @@ import numpy as np
 import pandas as pd
 import gudhi as gd
 import sklearn
+from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
 
 from random import randrange
 np.random.seed(0)
 
-n = 10
-t = np.linspace(0, 10, 11)
+n = 100
+# here, the mesh t needs to be previously computed
+t = np.linspace(0, 100, 11)
 u = [np.random.randint(-20, 20) for i in t]
 v = [np.random.randint(-20, 20) for i in t]
 
@@ -23,7 +25,6 @@ v = [np.random.randint(-20, 20) for i in t]
 
 # args are ordered like (u(t), v(t), t, t) where t is the Dirac mass centered
 # at t
-@np.vectorize
 def w1(u, v):   # the distance matrix metric arg. can only take two inputs
     return wasserstein_distance(u, v, t, t)
 
@@ -63,29 +64,15 @@ for i in range(n):
 
 test_matrix = np.array(test_matrix)
     
-# this is what it will look like, but this doesn't work
-ds = sklearn.metrics.pairwise(test_matrix, Y = None, metric = w1)
-print(ds)
+ds = sklearn.metrics.pairwise_distances(test_matrix, metric = w1)
 
-#TODO 
-# figure out how to fix w1 so it can be passed into ds
+# will normalizing affect the w1 distance??
+skeleton = gd.RipsComplex(
+    distance_matrix = ds,
+    max_edge_length = 8
+)
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+simplex_tree = skeleton.create_simplex_tree(max_dimension = 5)
+print(simplex_tree.num_simplices())
 
 

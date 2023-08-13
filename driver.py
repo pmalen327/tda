@@ -58,4 +58,13 @@ skeleton = gd.RipsComplex(
 simplex_tree = skeleton.create_simplex_tree(max_dimension = 5)
 print(simplex_tree.num_simplices())
 
-
+#TODO
+# implement gudhi W_p metric
+# pickle the returnd simplex tree object
+# filter max/min dimensions for persistence barcode/line graph
+# play with max_edge_length
+# normalize data
+# ACCOUNT FOR NEGATIVE VALUES IN TIME SERIES >> need to write two functions to
+    # check for negative values and adjust accordingly
+# wrap in main method maybe?
+# fix noise on n-sphere demo (lives in ~\RiemannTDA)

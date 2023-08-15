@@ -9,5 +9,4 @@ fileObj = open('simplex_tree.obj', 'rb')
 simplex_tree = pickle.load(fileObj)
 fileObj.close()
 
-# not working
 print(simplex_tree.num_simplices())

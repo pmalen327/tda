@@ -70,12 +70,11 @@ if __name__ == "__main__":
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
     fileObj.close()
+    print(simplex_tree.num_simplices())
 
 
 
 #TODO
-# pickle the returned simplex tree object
-    # fix pickle
 # filter max/min dimensions for persistence barcode/line graph
 # play with max_edge_length
 # normalize data

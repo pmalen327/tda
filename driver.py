@@ -51,26 +51,28 @@ def main(data):
    
 
 
-n = 100
-# # here, the mesh t needs to be previously computed
-t = np.linspace(0, 100, 11)
-# u = [np.random.randint(-20, 20) for i in t]
-# v = [np.random.randint(-20, 20) for i in t]
 
-test_matrix = []
-for i in range(n):
-    test_matrix.append([np.random.randint(-20, 20) for i in t])
-
-test_matrix = np.array(test_matrix)
 
 
 
 if __name__ == "__main__":
+    n = 100
+    # here, the mesh t needs to be previously computed
+    t = np.linspace(0, 100, 11)
+    # u = [np.random.randint(-20, 20) for i in t]
+    # v = [np.random.randint(-20, 20) for i in t]
+
+    test_matrix = []
+    for i in range(n):
+        test_matrix.append([np.random.randint(-20, 20) for i in t])
+
+    test_matrix = np.array(test_matrix)
     simplex_tree = main(test_matrix)
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
     fileObj.close()
     print(simplex_tree.num_simplices())
+
 
 
 

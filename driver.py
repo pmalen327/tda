@@ -15,7 +15,7 @@ from scipy.stats import wasserstein_distance
 from random import randrange
 
 
-def main(data):
+def main(data, max_edge_length, max_dimension):
 
     # computes W_1 for two probability measures u and v
     # discretely, we need pairs (t, u(t)) and (t, v(t))
@@ -44,15 +44,11 @@ def main(data):
     # will normalizing affect the w1 distance??
     skeleton = gd.RipsComplex(
         distance_matrix = ds,
-        max_edge_length = 8
+        max_edge_length = max_edge_length
     )
 
-    return skeleton.create_simplex_tree(max_dimension = 5)
+    return skeleton.create_simplex_tree(max_dimension = max_dimension)
    
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -67,7 +63,7 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix)
+    simplex_tree = main(test_matrix, 8 , 5)
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
     fileObj.close()

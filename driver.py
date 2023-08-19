@@ -64,19 +64,16 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, 8 , 5)
+    simplex_tree = main(test_matrix, max_edge_length=8 , max_dimension=5)
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
     fileObj.close()
     print(simplex_tree.num_simplices())
 
 
-
-
 #TODO
 # filter max/min dimensions for persistence barcode/line graph
 # play with max_edge_length
-# normalize data
 # ACCOUNT FOR NEGATIVE VALUES IN TIME SERIES >> need to write two functions to
     # check for negative values and adjust accordingly
 # fix noise on n-sphere demo (lives in ~\RiemannTDA)

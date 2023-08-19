@@ -5,9 +5,6 @@ import pandas as pd
 import gudhi as gd
 import matplotlib.pyplot as plt
 
-
-
-
 def main(minDim, maxDim):
     fileObj = open('simplex_tree.obj', 'rb')
     simplex_tree = pickle.load(fileObj)
@@ -15,12 +12,19 @@ def main(minDim, maxDim):
 
     pHomology = simplex_tree.persistence()
 
-    dims = [[] for i in range(minDim, maxDim)] # idk this is cursed, pls fix ffs
+    dims = []
     
     for x in pHomology:
-        pass
+        for i in range(minDim, maxDim + 1):
+            if x[0] == i:
+                dims.append(x[1])
 
-    return 0
+    dims = np.array(dims)
+    
+    return 'it worked ig'
+
+temp = main(1, 2)
+print(temp)
 
 # Reference >> want to get all dimensions in range of max/min
     # 0 and 1 homology features probably aren't that interesting
@@ -37,12 +41,5 @@ def main(minDim, maxDim):
 
 # dim0_bc = np.array(dim0_bc)
 # dim1_bc = np.array(dim1_bc)
-
-
-
-
-
-
-
 
 # print(simplex_tree.num_simplices())

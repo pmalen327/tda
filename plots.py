@@ -17,13 +17,13 @@ def main(minDim, maxDim):
     for x in pHomology:
         for i in range(minDim, maxDim + 1):
             if x[0] == i:
-                dims.append(x[1])
+                dims.append(x[1][1])
 
     dims = np.array(dims)
     
-    return 'it worked ig'
+    return dims
 
-temp = main(1, 2)
+temp = main(4, 5)
 print(temp)
 
 # Reference >> want to get all dimensions in range of max/min

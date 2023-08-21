@@ -13,7 +13,7 @@ def main(minDim, maxDim):
     simplex_tree.compute_persistence()
     
     dims = []
-    for i in range(minDim, maxDim):
+    for i in range(minDim, maxDim + 1):
         dims.append(simplex_tree.persistence_intervals_in_dimension(i))
 
 

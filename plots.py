@@ -21,7 +21,8 @@ def main(minDim, maxDim):
     counter = 1
     for i in range(len(dims)):
         for bc in dims[i]:
-            ax.plot(bc, [counter, counter])
+            ax.plot(bc, [counter, counter]) # color needs to be the same for each i
+                                            # probs make a color list and index through it
         counter += 1
 
     ax.set_ylabel("index of feature")
@@ -31,8 +32,6 @@ def main(minDim, maxDim):
     return dims
 
 
-
-
 if __name__ == "__main__":
-    temp = main(1, 4)
+    temp = main(1, 3)
     print(temp)

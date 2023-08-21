@@ -53,7 +53,7 @@ def main(data, max_edge_length, max_dimension):
 
 
 if __name__ == "__main__":
-    n = 100
+    n = 50
     # here, the mesh t needs to be previously computed
     t = np.linspace(0, 100, 11)
     # u = [np.random.randint(-20, 20) for i in t]

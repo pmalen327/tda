@@ -15,7 +15,9 @@ from scipy.stats import wasserstein_distance
 from random import randrange
 
 
-def main(data, max_edge_length, max_dimension):
+def main(data, max_edge_length, max_dimension, regularization):
+
+    data = np.array(data)
 
     # computes W_1 for two probability measures u and v
     # discretely, we need pairs (t, u(t)) and (t, v(t))
@@ -39,9 +41,26 @@ def main(data, max_edge_length, max_dimension):
             print('f has no negative values')
 
 
-    ds = sklearn.metrics.pairwise_distances(data, metric = w1)
+    if regularization == 'shift':
+        dataShifted = []
+        # FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUK
+        for i in range(data.shape[1]):
+            # this line may or may not work
+            # need to account for the shape of data
+            dataShifted.append(np.apply_along_axis(vert_shift, axis=1, arr=data[i,:]))
 
-    # will normalizing affect the w1 distance??
+    elif regularization == 'positive':
+        pass # this is where we will call the other function to fix negative values
+    
+    elif regularization == 'none':
+        dataShifted = data # this is cursed and probs a better way, but that's a 
+                           # future Preston problem
+    
+
+    dataShifted = np.array(dataShifted)
+
+    ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
+
     skeleton = gd.RipsComplex(
         distance_matrix = ds,
         max_edge_length = max_edge_length
@@ -64,7 +83,7 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, max_edge_length=8 , max_dimension=5)
+    simplex_tree = main(test_matrix, max_edge_length=8 , max_dimension=5, regularization='shift')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
@@ -73,7 +92,7 @@ if __name__ == "__main__":
 
 
 #TODO
-# filter max/min dimensions for persistence barcode/line graph
-# ACCOUNT FOR NEGATIVE VALUES IN TIME SERIES >> need to write two functions to
+# ACCOUNT FOR NEGATIVE VALUES IN TIME SERIES >> need to write the other function to
     # check for negative values and adjust accordingly
+# fix if/else tree
 # fix noise on n-sphere demo (lives in ~\RiemannTDA)

@@ -33,5 +33,5 @@ def main(minDim, maxDim):
 
 
 if __name__ == "__main__":
-    temp = main(1, 3)
+    temp = main(1, 5)
     print(temp)

@@ -18,7 +18,6 @@ from random import randrange
 def main(data, max_edge_length, max_dimension, regularization):
 
     data = np.array(data)
-
     # computes W_1 for two probability measures u and v
     # discretely, we need pairs (t, u(t)) and (t, v(t))
     # will normalize u and v if sum neq 1
@@ -47,7 +46,7 @@ def main(data, max_edge_length, max_dimension, regularization):
         for i in range(data.shape[1]):
             # this line may or may not work
             # need to account for the shape of data
-            dataShifted.append(np.apply_along_axis(vert_shift, axis=1, arr=data[i,:]))
+            dataShifted.append(np.apply_along_axis(vert_shift, axis=-1, arr=data[i,:]))
 
     elif regularization == 'positive':
         pass # this is where we will call the other function to fix negative values

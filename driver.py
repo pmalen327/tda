@@ -15,7 +15,7 @@ from scipy.stats import wasserstein_distance
 from random import randrange
 
 
-def main(data, max_edge_length, max_dimension, regularization):
+def main(data, t, max_edge_length, max_dimension, regularization):
 
     data = np.array(data)
     # computes W_1 for two probability measures u and v
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, max_edge_length=8 , max_dimension=5, regularization='shift')
+    simplex_tree = main(test_matrix, t, max_edge_length=8 , max_dimension=5, regularization='shift')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)

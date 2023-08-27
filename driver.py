@@ -71,7 +71,7 @@ def main(data, t, max_edge_length, max_dimension, regularization):
 
 
 if __name__ == "__main__":
-    n = 50
+    n = 75
     # here, the mesh t needs to be previously computed
     t = np.linspace(0, 100, 11)
     # u = [np.random.randint(-20, 20) for i in t]
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, t, max_edge_length=8 , max_dimension=5, regularization='shift')
+    simplex_tree = main(test_matrix, t, max_edge_length=8 , max_dimension=5, regularization='none')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)

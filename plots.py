@@ -6,7 +6,7 @@ import gudhi as gd
 import matplotlib.pyplot as plt
 
 def main(minDim, maxDim):
-    fileObj = open('simplex_tree.obj', 'rb')
+    fileObj = open('timeSeries_simplex_tree.obj', 'rb')
     simplex_tree = pickle.load(fileObj)
     fileObj.close()
 
@@ -17,12 +17,13 @@ def main(minDim, maxDim):
         dims.append(simplex_tree.persistence_intervals_in_dimension(i))
 
 
+    colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black']
     fig, ax = plt.subplots(figsize = (7, 7))
     counter = 1
     for i in range(len(dims)):
+        color = colors[i]
         for bc in dims[i]:
-            ax.plot(bc, [counter, counter]) # color needs to be the same for each i
-                                            # probs make a color list and index through it
+            ax.plot(bc, [counter, counter], color=color)
         counter += 1
 
     ax.set_ylabel("index of feature")
@@ -33,5 +34,4 @@ def main(minDim, maxDim):
 
 
 if __name__ == "__main__":
-    temp = main(1, 5)
-    print(temp)
+    temp = main(1, 4)

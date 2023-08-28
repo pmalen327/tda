@@ -20,7 +20,7 @@ data = pd.DataFrame(df).to_numpy()
 # I have something backwards, I think I know but will need to sketch it out
 if __name__ == '__main__':
     t = [i+1 for i in range(data.shape[1])]
-    simplex_tree = main(data, t, max_edge_length=3, max_dimension=3, regularization='none')
+    simplex_tree = main(data, t, max_edge_length=3, max_dimension=4, regularization='none')
     print(simplex_tree.num_simplices())
 
     fileObj = open('timeSeries_simplex_tree.obj', 'wb')

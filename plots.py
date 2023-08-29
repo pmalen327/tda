@@ -6,7 +6,7 @@ import gudhi as gd
 import matplotlib.pyplot as plt
 
 def main(minDim, maxDim):
-    fileObj = open('timeSeries_simplex_tree.obj', 'rb')
+    fileObj = open('simplex_tree.obj', 'rb')
     simplex_tree = pickle.load(fileObj)
     fileObj.close()
 
@@ -34,4 +34,4 @@ def main(minDim, maxDim):
 
 
 if __name__ == "__main__":
-    main(1, 4)
+    main(1, 5)

@@ -11,11 +11,13 @@ import sklearn
 from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
+from scipy.stats import energy_distance
+
 
 from random import randrange
 
 
-def main(data, t, max_edge_length, max_dimension, shift):
+def main(data, t, max_edge_length, max_dimension, shift, metric):
 
     data = np.array(data)
     # computes W_1 for two probability measures u and v
@@ -26,6 +28,9 @@ def main(data, t, max_edge_length, max_dimension, shift):
     # at t
     def w1(u, v):   # the distance matrix metric arg. can only take two inputs
         return wasserstein_distance(u, v, t, t)
+    
+    def e1(u, v):
+        return energy_distance(u, v, t, t)
 
 
     # if inf(f) is negative, we send f - inf(f) to the new value
@@ -49,7 +54,13 @@ def main(data, t, max_edge_length, max_dimension, shift):
     else:
         dataShifted = np.array(data)
 
-    ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
+
+    if metric == 'w1' or metric == None:
+        ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
+
+    elif metric == 'e1':
+        ds = sklearn.metrics.pairwise_distances(dataShifted, metric = e1)
+
 
     skeleton = gd.RipsComplex(
         distance_matrix = ds,
@@ -73,7 +84,7 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, shift=True)
+    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, shift=True, metric='w1')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)

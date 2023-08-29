@@ -15,7 +15,7 @@ from scipy.stats import wasserstein_distance
 from random import randrange
 
 
-def main(data, t, max_edge_length, max_dimension, regularization):
+def main(data, t, max_edge_length, max_dimension, shift):
 
     data = np.array(data)
     # computes W_1 for two probability measures u and v
@@ -40,23 +40,14 @@ def main(data, t, max_edge_length, max_dimension, regularization):
             print('f has no negative values')
 
 
-    if regularization == 'shift':
+    if shift == True:
         dataShifted = []
-        # FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUK
         for i in range(data.shape[1]):
-            # this line may or may not work
-            # need to account for the shape of data
+                # this line may or may not work
+                # need to account for the shape of data
             dataShifted.append(np.apply_along_axis(vert_shift, axis=-1, arr=data[i,:]))
-
-    elif regularization == 'positive':
-        pass # this is where we will call the other function to fix negative values
-    
-    elif regularization == 'none':
-        dataShifted = data # this is cursed and probs a better way, but that's a 
-                           # future Preston problem
-    
-
-    dataShifted = np.array(dataShifted)
+    else:
+        dataShifted = np.array(data)
 
     ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
 
@@ -82,7 +73,7 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, regularization='none')
+    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, shift=True)
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
@@ -91,7 +82,4 @@ if __name__ == "__main__":
 
 
 #TODO
-# ACCOUNT FOR NEGATIVE VALUES IN TIME SERIES >> need to write the other function to
-    # check for negative values and adjust accordingly
-# fix if/else tree
 # fix noise on n-sphere demo (lives in ~\RiemannTDA)

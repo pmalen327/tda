@@ -44,7 +44,7 @@ def main(data, t, max_edge_length, max_dimension, shift, metric):
         except:
             print('f has no negative values')
 
-
+    # this is not working as expected
     if shift == True:
         dataShifted = []
         for i in range(data.shape[1]):
@@ -84,7 +84,9 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, shift=True, metric='w1')
+
+    # need to figure out how to find a good edge length/alpha
+    simplex_tree = main(test_matrix, t, max_edge_length=3.5, max_dimension=4, shift=None, metric='w1')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)
@@ -93,4 +95,5 @@ if __name__ == "__main__":
 
 
 #TODO
+# fix the shift if/else tree
 # fix noise on n-sphere demo (lives in ~\RiemannTDA)

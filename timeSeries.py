@@ -30,7 +30,7 @@ ax[0, 0].title.set_text('Microsoft Stock Prices 4/1/2015 - 3/31/21')
 
 ax[0, 1].plot(t, L1, linewidth=.3, color='green')
 ax[0, 1].set_ylabel('L1 Norm')
-ax[0, 1].title.set_text('L1 Norm Between High and Low')
+ax[0, 1].title.set_text('Pointwise L1 Norm Between High and Low')
 
 ax[1, 1].plot(t[1:], W1, linewidth=.3, color='red')
 ax[1, 1].set_ylabel('Wasserstein Distance')

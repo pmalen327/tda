@@ -86,7 +86,7 @@ if __name__ == "__main__":
     test_matrix = np.array(test_matrix)
 
     # need to figure out how to find a good edge length/alpha
-    simplex_tree = main(test_matrix, t, max_edge_length=3.5, max_dimension=4, shift=None, metric='w1')
+    simplex_tree = main(test_matrix, t, max_edge_length=3.2, max_dimension=5, shift=None, metric='w1')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)

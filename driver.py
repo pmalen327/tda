@@ -36,13 +36,10 @@ def main(data, t, max_edge_length, max_dimension, shift, metric):
     # if inf(f) is negative, we send f - inf(f) to the new value
     # i.e. shifting everything up by the value of the min
     def vert_shift(f):
-        try:
-            if min(f) < 0:
-                vert_f = [i + abs(min(f)) for i in f]
-            return vert_f
-        
-        except:
-            print('f has no negative values')
+        if min(f) < 0:
+            vert_f = [i + abs(min(f)) for i in f]
+        return vert_f
+
 
     # this is not working as expected
     if shift == True:
@@ -74,10 +71,7 @@ def main(data, t, max_edge_length, max_dimension, shift, metric):
 
 if __name__ == "__main__":
     n = 1000
-    # here, the mesh t needs to be previously computed
     t = np.linspace(0, 100, 11)
-    # u = [np.random.randint(-20, 20) for i in t]
-    # v = [np.random.randint(-20, 20) for i in t]
 
     test_matrix = []
     for i in range(n):
@@ -95,5 +89,4 @@ if __name__ == "__main__":
 
 
 #TODO
-# fix the shift if/else tree
 # fix noise on n-sphere demo (lives in ~\RiemannTDA)

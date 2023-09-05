@@ -30,6 +30,7 @@ def main(minDim, maxDim):
     ax.set_xlabel("filtration value")
     ax.set_title("persistence barcode")
     ax.legend()
+    plt.show()
     return dims
 
 

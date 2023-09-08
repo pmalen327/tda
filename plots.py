@@ -23,13 +23,12 @@ def main(minDim, maxDim):
     for i in range(len(dims)):
         color = colors[i]
         for bc in dims[i]:
-            ax.plot(bc, [counter, counter], label='Dimension '+ str(i), linewidth=.3, color=color)
+            ax.plot(bc, [counter, counter], linewidth=.3, color=color)
         counter += 1
 
     ax.set_ylabel("index of feature")
     ax.set_xlabel("filtration value")
     ax.set_title("persistence barcode")
-    ax.legend()
     plt.show()
     return dims
 

@@ -8,13 +8,9 @@ import pandas as pd
 import gudhi as gd
 import sklearn
 
-from sklearn.preprocessing import normalize
 from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
 from scipy.stats import energy_distance
-
-
-from random import randrange
 
 
 def main(data, t, max_edge_length, max_dimension, shift, metric):
@@ -35,28 +31,30 @@ def main(data, t, max_edge_length, max_dimension, shift, metric):
 
     # if inf(f) is negative, we send f - inf(f) to the new value
     # i.e. shifting everything up by the value of the min
+
+
+# FIX DIS - the indexing is fucked or something
     def vert_shift(f):
         if min(f) < 0:
             vert_f = [i + abs(min(f)) for i in f]
         return vert_f
 
-
-    # this is not working as expected
     if shift == True:
         dataShifted = []
         for i in range(data.shape[1]):
-                # this line may or may not work
-                # need to account for the shape of data
-            dataShifted.append(np.apply_along_axis(vert_shift, axis=-1, arr=data[i,:]))
+            dataShifted.append(vert_shift(data[i,:]))
+        dataShifted = np.array(dataShifted)
+
     else:
         dataShifted = np.array(data)
 
 
-    if metric == 'w1' or metric == None:
-        ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
 
-    elif metric == 'e1':
+    if metric == 'e1':
         ds = sklearn.metrics.pairwise_distances(dataShifted, metric = e1)
+    
+    else:
+        ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
 
 
     skeleton = gd.RipsComplex(
@@ -80,7 +78,7 @@ if __name__ == "__main__":
     test_matrix = np.array(test_matrix)
 
     # need to figure out how to find a good edge length/alpha
-    simplex_tree = main(test_matrix, t, max_edge_length=3.2, max_dimension=4, shift=None, metric='w1')
+    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, shift=True, metric='w1')
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)

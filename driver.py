@@ -33,8 +33,9 @@ def main(data, t, max_edge_length, max_dimension):
         return vert_f
 
     dataShifted = []
-    for i in range(data.shape[1]):
+    for i in range(data.shape[0]):
         dataShifted.append(vert_shift(data[i,:]))
+
     dataShifted = np.array(dataShifted)
 
     ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)

@@ -10,10 +10,9 @@ import sklearn
 
 from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
-from scipy.stats import energy_distance
 
 
-def main(data, t, max_edge_length, max_dimension, shift, metric):
+def main(data, t, max_edge_length, max_dimension):
 
     data = np.array(data)
     # computes W_1 for two probability measures u and v
@@ -24,38 +23,21 @@ def main(data, t, max_edge_length, max_dimension, shift, metric):
     # at t
     def w1(u, v):   # the distance matrix metric arg. can only take two inputs
         return wasserstein_distance(u, v, t, t)
-    
-    def e1(u, v):
-        return energy_distance(u, v, t, t)
-
 
     # if inf(f) is negative, we send f - inf(f) to the new value
     # i.e. shifting everything up by the value of the min
-
-
 # FIX DIS - the indexing is fucked or something
     def vert_shift(f):
         if min(f) < 0:
             vert_f = [i + abs(min(f)) for i in f]
         return vert_f
 
-    if shift == True:
-        dataShifted = []
-        for i in range(data.shape[1]):
-            dataShifted.append(vert_shift(data[i,:]))
-        dataShifted = np.array(dataShifted)
+    dataShifted = []
+    for i in range(data.shape[1]):
+        dataShifted.append(vert_shift(data[i,:]))
+    dataShifted = np.array(dataShifted)
 
-    else:
-        dataShifted = np.array(data)
-
-
-
-    if metric == 'e1':
-        ds = sklearn.metrics.pairwise_distances(dataShifted, metric = e1)
-    
-    else:
-        ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
-
+    ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
 
     skeleton = gd.RipsComplex(
         distance_matrix = ds,
@@ -78,7 +60,7 @@ if __name__ == "__main__":
     test_matrix = np.array(test_matrix)
 
     # need to figure out how to find a good edge length/alpha
-    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5, shift=True, metric='w1')
+    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=5)
 
     fileObj = open('simplex_tree.obj', 'wb')
     pickle.dump(simplex_tree, fileObj)

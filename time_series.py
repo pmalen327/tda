@@ -3,10 +3,10 @@ import pandas as pd
 import gudhi as gd
 import glob
 import matplotlib.pyplot as plt
+import pickle
 
 from scipy.stats import wasserstein_distance
 from driver import main
-
 
 files = glob.glob("data/*.csv")
 
@@ -22,3 +22,13 @@ data = np.array(data)
 
 # mesh spacing up to n days
 t = np.linspace(0, n, n)
+
+# should be n rows and t columns
+print(data.shape)
+
+# this does not like vert_shift() for some reason
+simplex_tree = main(data, t, max_edge_length=3, max_dimension=4)
+fileObj = open('time_series_tree.obj', 'wb')
+pickle.dump(simplex_tree, fileObj)
+fileObj.close()
+print(simplex_tree.num_simplices())

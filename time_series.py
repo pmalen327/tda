@@ -10,7 +10,7 @@ from driver import main
 
 files = glob.glob("data/*.csv")
 
-n = 10
+n = 1000
 data = []
 for f in files:
     df = pd.read_csv(f)
@@ -18,8 +18,7 @@ for f in files:
     df = df.iloc[:n]
     data.append(df.to_numpy())
 
-for i in range(len(data)):
-    if len(data[i]) != n: # the fuck is this out of range lol
-        data.pop(i)
-
 data = np.array(data)
+
+# mesh spacing up to n days
+t = np.linspace(0, n, n)

@@ -8,7 +8,6 @@ from scipy.stats import wasserstein_distance
 from driver import main
 
 
-
 files = glob.glob("data/*.csv")
 
 n = 10
@@ -17,8 +16,10 @@ for f in files:
     df = pd.read_csv(f)
     df = df['High']
     df = df.iloc[:n]
-    df = df.to_numpy()
-    data.append(df)
+    data.append(df.to_numpy())
 
-# why tf no go numpy array
-print(data)
+for i in range(len(data)):
+    if len(data[i]) != n: # the fuck is this out of range lol
+        data.pop(i)
+
+data = np.array(data)

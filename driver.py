@@ -30,14 +30,17 @@ def main(data, t, max_edge_length, max_dimension):
     def vert_shift(f):
         if min(f) < 0:
             vert_f = [i + abs(min(f)) for i in f]
+        else:
+            return f
         return vert_f
 
     dataShifted = []
+    
     for i in range(data.shape[0]):
         dataShifted.append(vert_shift(data[i,:]))
 
     dataShifted = np.array(dataShifted)
-
+    
     ds = sklearn.metrics.pairwise_distances(dataShifted, metric = w1)
 
     skeleton = gd.RipsComplex(
@@ -59,13 +62,14 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
+    print(test_matrix.shape)
 
     # need to figure out how to find a good edge length/alpha
     simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=4)
 
-    fileObj = open('simplex_tree.obj', 'wb')
-    pickle.dump(simplex_tree, fileObj)
-    fileObj.close()
+    # fileObj = open('simplex_tree.obj', 'wb')
+    # pickle.dump(simplex_tree, fileObj)
+    # fileObj.close()
     print(simplex_tree.num_simplices())
 
 

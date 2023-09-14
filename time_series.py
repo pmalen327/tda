@@ -19,15 +19,15 @@ for f in files:
     data.append(df.to_numpy())
 
 data = np.array(data)
+# data = np.transpose(data)
 
 # mesh spacing up to n days
 t = np.linspace(0, n, n)
 
-# should be n rows and t columns
 print(data.shape)
 
 # this does not like vert_shift() for some reason
-simplex_tree = main(data, t, max_edge_length=3, max_dimension=4)
+simplex_tree = main(data, t, max_edge_length=50, max_dimension=4)
 fileObj = open('time_series_tree.obj', 'wb')
 pickle.dump(simplex_tree, fileObj)
 fileObj.close()

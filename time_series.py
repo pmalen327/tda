@@ -5,12 +5,13 @@ import glob
 import matplotlib.pyplot as plt
 import pickle
 
+from sklearn.preprocessing import normalize
 from scipy.stats import wasserstein_distance
 from driver import main
 
 files = glob.glob("data/*.csv")
 
-n = 1000
+n = 1500
 data = []
 for f in files:
     df = pd.read_csv(f)
@@ -19,15 +20,13 @@ for f in files:
     data.append(df.to_numpy())
 
 data = np.array(data)
-# data = np.transpose(data)
-
+data = normalize(data, axis=1, norm='l1')
 # mesh spacing up to n days
 t = np.linspace(0, n, n)
 
 print(data.shape)
 
-# this does not like vert_shift() for some reason
-simplex_tree = main(data, t, max_edge_length=50, max_dimension=4)
+simplex_tree = main(data, t, max_edge_length=5, max_dimension=5)
 fileObj = open('time_series_tree.obj', 'wb')
 pickle.dump(simplex_tree, fileObj)
 fileObj.close()

@@ -35,4 +35,4 @@ def main(minDim, maxDim):
 
 
 if __name__ == "__main__":
-    main(2, 5)
+    main(1, 5)

@@ -49,6 +49,7 @@ def main(data, t, max_edge_length, max_dimension):
     )
 
     simplex_tree = skeleton.create_simplex_tree(max_dimension = max_dimension)
+    simplex_tree.expansion(max_dimension)
     return simplex_tree
    
 

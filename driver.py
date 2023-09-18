@@ -63,14 +63,13 @@ if __name__ == "__main__":
         test_matrix.append([np.random.randint(-20, 20) for i in t])
 
     test_matrix = np.array(test_matrix)
-    print(test_matrix.shape)
 
     # need to figure out how to find a good edge length/alpha
     simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=4)
 
-    # fileObj = open('simplex_tree.obj', 'wb')
-    # pickle.dump(simplex_tree, fileObj)
-    # fileObj.close()
+    fileObj = open('simplex_tree.obj', 'wb')
+    pickle.dump(simplex_tree, fileObj)
+    fileObj.close()
     print(simplex_tree.num_simplices())
 
 

@@ -6,7 +6,7 @@ import gudhi as gd
 import matplotlib.pyplot as plt
 
 def main(minDim, maxDim):
-    fileObj = open('simplex_tree.obj', 'rb')
+    fileObj = open('time_series_tree.obj', 'rb')
     simplex_tree = pickle.load(fileObj)
     fileObj.close()
 
@@ -23,7 +23,7 @@ def main(minDim, maxDim):
     for i in range(len(dims)):
         color = colors[i]
         for bc in dims[i]:
-            ax.plot(bc, [counter, counter], linewidth=.3, color=color)
+            ax.plot(bc, [counter, counter], linewidth=5, color=color)
         counter += 1
 
     ax.set_ylabel("index of feature")

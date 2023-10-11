@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import gudhi as gd
 import sklearn
+import springpy as sp
 
 from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
@@ -26,7 +27,6 @@ def main(data, t, max_edge_length, max_dimension):
 
     # if inf(f) is negative, we send f - inf(f) to the new value
     # i.e. shifting everything up by the value of the min
-# FIX DIS - the indexing is fucked or something
     def vert_shift(f):
         if min(f) < 0:
             vert_f = [i + abs(min(f)) for i in f]
@@ -50,7 +50,7 @@ def main(data, t, max_edge_length, max_dimension):
 
     simplex_tree = skeleton.create_simplex_tree(max_dimension = max_dimension)
     simplex_tree.expansion(max_dimension)
-    return simplex_tree
+    return simplex_tree, ds
    
 
 
@@ -65,13 +65,9 @@ if __name__ == "__main__":
     test_matrix = np.array(test_matrix)
 
     # need to figure out how to find a good edge length/alpha
-    simplex_tree = main(test_matrix, t, max_edge_length=3, max_dimension=4)
+    simplex_tree, ds = main(test_matrix, t, max_edge_length=3, max_dimension=4)
 
-    fileObj = open('simplex_tree.obj', 'wb')
-    pickle.dump(simplex_tree, fileObj)
-    fileObj.close()
+    # fileObj = open('simplex_tree.obj', 'wb')
+    # pickle.dump(simplex_tree, fileObj)
+    # fileObj.close()
     print(simplex_tree.num_simplices())
-
-
-#TODO
-# fix noise on n-sphere demo (lives in ~\RiemannTDA)

@@ -23,15 +23,15 @@ def main(minDim, maxDim):
     for i in range(len(dims)):
         color = colors[i]
         for bc in dims[i]:
-            ax.plot(bc, [counter, counter], linewidth=5, color=color)
-        counter += 1
+            ax.plot(bc, [counter, counter], linewidth=3, color=color)
+            counter += 1
 
     ax.set_ylabel("index of feature")
     ax.set_xlabel("filtration value")
     ax.set_title("persistence barcode")
     plt.show()
-    return dims
+    return simplex_tree.betti_numbers()
 
 
 if __name__ == "__main__":
-    main(1, 3)
+    print(main(0, 4))

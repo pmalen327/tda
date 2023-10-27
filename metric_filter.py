@@ -1,5 +1,11 @@
 from time_series import simplex_tree, ds
 import numpy as np
+import pickle
+
+fileObj = open('time_series_df.obj', 'rb')
+dataTS = pickle.load(fileObj)
+fileObj.close()
+
 
 # this is gross af
 def metric_filter(minDim, maxDim, minDS, maxDS):
@@ -19,6 +25,13 @@ def metric_filter(minDim, maxDim, minDS, maxDS):
     return metrics
 
 print(ds.shape)
+print(dataTS)
+
+# this is TURBO cursed
+features_1 = []
+for i in range(ds.shape[0]):
+    for j in range(ds.shape[0]):
+        if i <= j:
 
 
 # dsFilter = np.array(ds[np.triu_indices(ds.shape[0], k=1)])

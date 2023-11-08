@@ -55,19 +55,16 @@ def main(data, t, max_edge_length, max_dimension):
 
 
 if __name__ == "__main__":
-    n = 1000
-    t = np.linspace(0, 100, 11)
+    # load matrix from ecgPRELIM
+    # return simplex tree and ds
+    # send to plotting
+    fileObj = open('ecgARRAY.obj', 'rb')
+    data = pickle.load(fileObj)
+    fileObj.close()
 
-    test_matrix = []
-    for i in range(n):
-        test_matrix.append([np.random.randint(-20, 20) for i in t])
+    t = np.linspace(0, 1000, 1000)
+    simplex_tree, ds = main(data, t, max_edge_length=100, max_dimension=3)
 
-    test_matrix = np.array(test_matrix)
-
-    # need to figure out how to find a good edge length/alpha
-    simplex_tree, ds = main(test_matrix, t, max_edge_length=3, max_dimension=4)
-
-    # fileObj = open('simplex_tree.obj', 'wb')
-    # pickle.dump(simplex_tree, fileObj)
-    # fileObj.close()
-    print(simplex_tree.num_simplices())
+    fileObj = open('ecgTREE.obj', 'wb')
+    pickle.dump(simplex_tree, fileObj)
+    fileObj.close()

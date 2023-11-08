@@ -5,8 +5,9 @@ import pandas as pd
 import gudhi as gd
 import matplotlib.pyplot as plt
 
+
 def main(minDim, maxDim):
-    fileObj = open('time_series_tree.obj', 'rb')
+    fileObj = open('ecgTREE.obj', 'rb')
     simplex_tree = pickle.load(fileObj)
     fileObj.close()
 
@@ -29,9 +30,10 @@ def main(minDim, maxDim):
     ax.set_ylabel("index of feature")
     ax.set_xlabel("filtration value")
     ax.set_title("persistence barcode")
+    # plt.savefig('barcodeStocks.png', dpi=2000)
     plt.show()
     return simplex_tree.betti_numbers()
 
 
 if __name__ == "__main__":
-    print(main(0, 4))
+    print(main(0, 3))

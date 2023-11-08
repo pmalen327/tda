@@ -1,58 +1,38 @@
+# This returns the dataframe indices of features that correspond to the
+# dim-dimensional homology groups
+
 from time_series import simplex_tree, ds
 import numpy as np
+import pandas as pd
 import pickle
+import itertools
+import glob
+import os
+
 
 fileObj = open('time_series_df.obj', 'rb')
-dataTS = pickle.load(fileObj)
+df = pickle.load(fileObj)
 fileObj.close()
 
+dim = 1
 
-# this is gross af
-def metric_filter(minDim, maxDim, minDS, maxDS):
-    filter = []
-    metrics = []
+simplex_tree.compute_persistence()
+filter = list(itertools.chain(*simplex_tree.persistence_intervals_in_dimension(dim)))
+indices = []
+for i in range(1,ds.shape[0]-1):
+    for j in range(1,i-1):
+        if ds[i][j] in filter:
+            indices.append((i,j))
 
-    simplex_tree.compute_persistence()
+indices = list(itertools.chain(*indices))
 
-    for item in simplex_tree.persistence():
-        if item[0] in range(minDim, maxDim + 1):
-            filter.append(item)
+files = glob.glob("data/*.csv")
+symbols = []
+for f in files:
+    symbols.append(os.path.basename(f'/Users/stone/Desktop/project files/repos/tda/data/{f}',))
 
-    for item in filter:
-        if (item[1][0] in range(minDS, maxDS)) and (item[1][1] in range(minDS, maxDS)):
-            metrics.append([item[1][0], item[1][1]])
-    
-    return metrics
+# these are the homology features associated with dim
+dim_homology = [symbols[i] for i in indices]
 
-print(ds.shape)
-print(dataTS)
-
-# this is TURBO cursed
-features_1 = []
-for i in range(ds.shape[0]):
-    for j in range(ds.shape[0]):
-        if i <= j:
-
-
-# dsFilter = np.array(ds[np.triu_indices(ds.shape[0], k=1)])
-# print(dsFilter)
-# print(len(dsFilter))
-
-
-
-# TODO
-# threshold out values in ds
-# get indices of values that survive
-# retrieve the corresponding symbols from time_series_df.obj
-# I know HOW to do this I just don't WANT to do this lolz
-
-# FUCKCKCKCKCKCKCKCKCKCKCKYWUCKY
-
-
-
-
-
-
-
-
-
+# now what tf to do with these
+print(dim_homology)

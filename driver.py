@@ -8,12 +8,14 @@ import pandas as pd
 import gudhi as gd
 import sklearn
 import springpy as sp
+from visuals.plots import plot_barcode
+import matplotlib.pyplot as plt
 
 from sklearn.metrics import pairwise_distances
 from scipy.stats import wasserstein_distance
 
 
-def main(data, t, max_edge_length, max_dimension):
+def compute_tree(data, t, max_edge_length, max_dimension):
 
     data = np.array(data)
     # computes W_1 for two probability measures u and v
@@ -49,22 +51,60 @@ def main(data, t, max_edge_length, max_dimension):
     )
 
     simplex_tree = skeleton.create_simplex_tree(max_dimension = max_dimension)
-    simplex_tree.expansion(max_dimension)
+    simplex_tree.expansion(max_dimension + 1)
     return simplex_tree, ds
    
 
-
-if __name__ == "__main__":
-    # load matrix from ecgPRELIM
-    # return simplex tree and ds
-    # send to plotting
-    fileObj = open('ecgARRAY.obj', 'rb')
-    data = pickle.load(fileObj)
+def plot_barcode(min_dimension, max_dimension):
+    fileObj = open('ecgTREE.obj', 'rb')
+    simplex_tree = pickle.load(fileObj)
     fileObj.close()
 
-    t = np.linspace(0, 1000, 1000)
-    simplex_tree, ds = main(data, t, max_edge_length=100, max_dimension=3)
+    simplex_tree.compute_persistence()
+    
+    dims = []
+    for i in range(min_dimension, max_dimension + 1):
+        dims.append(simplex_tree.persistence_intervals_in_dimension(i))
 
-    fileObj = open('ecgTREE.obj', 'wb')
-    pickle.dump(simplex_tree, fileObj)
-    fileObj.close()
+
+    colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black']
+    fig, ax = plt.subplots(figsize = (7, 7))
+    counter = 1
+    for i in range(len(dims)):
+        color = colors[i]
+        for bc in dims[i]:
+            ax.plot(bc, [counter, counter], linewidth=3, color=color)
+            counter += 1
+
+    ax.set_ylabel("index of feature")
+    ax.set_xlabel("filtration value")
+    ax.set_title("persistence barcode")
+    return fig, ax
+
+
+
+def main(data, t, max_edge_length, min_dimension, max_dimension):
+    tree, ds = compute_tree(data, t, max_edge_length, max_dimension)
+    fig, ax = plot_barcode(min_dimension, max_dimension)
+    return fig, ax
+
+
+t = np.linspace(0, 1000, 1000)
+min_dimension = 0
+max_dimension = 3
+max_edge_length = 10
+fileObj = open('ecgARRAY.obj', 'rb')
+# if data is not from the precomputed objects, change this to any numpy array or
+#   pandas dataframe and remove the pickle commands
+data = pickle.load(fileObj)
+fileObj.close()
+
+fig, ax = main(data, t, max_edge_length, min_dimension, max_dimension)
+plt.show()
+
+# fileObj = open('ecgTREE.obj', 'wb')
+# pickle.dump(simplex_tree, fileObj)
+# fileObj.close()
+# save/pickle plots
+
+

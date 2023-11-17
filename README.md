@@ -1,4 +1,4 @@
-# TDA
+# Topological Data Analysis for Electrocardiogram Signals
 To run, navigate to the parent directory and pass with the arguments:
 `fig, ax = main(data, t, max_edge_length, min_dimension, max_dimension)`
 then to display the figure, just call `plt.show()`.\

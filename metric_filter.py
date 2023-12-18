@@ -10,11 +10,11 @@ import glob
 import os
 
 
-fileObj = open('time_series_df.obj', 'rb')
+fileObj = open('DATAFRAME.obj', 'rb')
 df = pickle.load(fileObj)
 fileObj.close()
 
-dim = 1
+dim = 2
 
 simplex_tree.compute_persistence()
 filter = list(itertools.chain(*simplex_tree.persistence_intervals_in_dimension(dim)))
@@ -29,10 +29,8 @@ indices = list(itertools.chain(*indices))
 files = glob.glob("data/*.csv")
 symbols = []
 for f in files:
-    symbols.append(os.path.basename(f'/Users/stone/Desktop/project files/repos/tda/data/{f}',))
+    symbols.append(os.path.basename(f'PATH{f}',))
 
 # these are the homology features associated with dim
 dim_homology = [symbols[i] for i in indices]
-
-# now what tf to do with these
-print(dim_homology)
+return dim_homology

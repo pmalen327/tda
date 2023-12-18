@@ -1,6 +1,6 @@
 # Topological Data Analysis for Electrocardiogram Signals
 We used PTB-XL data available here:
-https://www.physionet.org/content/ptb-xl/1.0.3/#files-panel
+https://www.physionet.org/content/ptb-xl/1.0.3/#files-panel\
 \
 To run, navigate to the parent directory and pass with the arguments:
 `fig, ax = main(data, t, max_edge_length, min_dimension, max_dimension)`

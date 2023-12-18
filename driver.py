@@ -55,9 +55,8 @@ def main(data, t, max_edge_length, min_dimension, max_dimension):
     
 
     def plot_barcode(min_dimension, max_dimension):
-        fileObj = open('ecgTREE.obj', 'rb')
-        simplex_tree = pickle.load(fileObj)
-        fileObj.close()
+        
+        simplex_tree, ds = compute_tree(data=data, t=t, max_edge_length=max_edge_length, max_dimension=max_dimension)
 
         simplex_tree.compute_persistence()
         
@@ -80,27 +79,16 @@ def main(data, t, max_edge_length, min_dimension, max_dimension):
         ax.set_title("persistence barcode")
         return fig, ax
     
-    tree, ds = compute_tree(data, t, max_edge_length, max_dimension)
     fig, ax = plot_barcode(min_dimension, max_dimension)
     return fig, ax
 
 
-# for this example, the ECG data was sampled at 1000 nodes over 10 seconds
+# for this example, the data was sampled at 1000 nodes
 t = np.linspace(0, 1000, 1000)
 min_dimension = 0
 max_dimension = 3
 max_edge_length = 10
-fileObj = open('ecgARRAY.obj', 'rb')
-# if data is not from the precomputed objects, change this to any numpy array or
-#   pandas dataframe and remove the pickle commands
-data = pickle.load(fileObj)
-fileObj.close()
 
+data = 'DATA_MATRIX'
 fig, ax = main(data, t, max_edge_length, min_dimension, max_dimension)
 plt.show()
-
-
-
-# fileObj = open('ecgTREE.obj', 'wb')
-# pickle.dump(simplex_tree, fileObj)
-# fileObj.close()

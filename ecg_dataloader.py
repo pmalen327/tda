@@ -14,7 +14,7 @@ def load_raw_data(df, sampling_rate, path):
     return data
 
 # path to ~/ptbxl 
-PATH = '/Users/stone/Desktop/project files/repos/tda/ecg_EX/ptbxl/'
+PATH = 'PATH_TO_PTBXL'
 sampling_rate=100
 
 # load and convert annotation data
@@ -51,21 +51,3 @@ y_test = Y[Y.strat_fold == test_fold].diagnostic_superclass
 data = X_train.transpose(2,0,1)
 data = data.reshape(12*19601,1000)
 data = np.array(data)
-
-# filtering for 1000ish samples
-indices = list(range(1500))
-indices = indices[0::12]
-t = np.linspace(0, 1000, 1000)
-
-batch = np.array([data[i] for i in indices])
-plt.plot(t, batch[0], c='blue')
-plt.plot(t, batch[3], c='red')
-# plt.plot(t, batch[6], c='orange')
-# plt.plot(t, batch[10], c='green')
-plt.savefig('ecgSigs2.png', dpi=2000, transparent=True)
-# plt.show()
-
-
-# fileObj = open('ecgARRAY175.obj', 'wb')
-# pickle.dump(batch, fileObj)
-# fileObj.close()

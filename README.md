@@ -1,4 +1,4 @@
-# Topological Data Analysis for Electrocardiogram Signals
+# Topological Data Analysis for Time Series
 We used the PTB-XL dataset available here:
 https://www.physionet.org/content/ptb-xl/1.0.3/#files-panel \
 \

@@ -1,5 +1,5 @@
 # Topological Data Analysis for Electrocardiogram Signals
-We used PTB-XL data available here:
+We used the PTB-XL dataset available here:
 https://www.physionet.org/content/ptb-xl/1.0.3/#files-panel \
 \
 To run, navigate to the parent directory and pass with the arguments:

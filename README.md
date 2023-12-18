@@ -28,18 +28,3 @@ The pipeline is structured as follows:\
     3. a simplex tree object is computed from the distance matrix\
     \
     4. a persistence barcode plot is generated and returned from the simplex tree object\
-\
-All other files and directories were used to produce the figures and examples as outlined\
-in the paper. To reproduce these figures, simply run `main()` with the `data` argument as\
-`fileObj = open('ecgARRAY.obj', 'rb')`\
-`data = pickle.load(fileObj)`\
-`fileObj.close()`\
-\
-for the ECG example, and similarly for the stock time series data:\
-`fileObj = open('time_series_array.obj', 'rb')`\
-`data = pickle.load(fileObj)`\
-`fileObj.close()`\
-\
-The `data loaders` and `ecg_EX` directories contain the data and scripts used
-to preprocess the appropriate data and pickle the daata into the `ecgARRAY.obj`
-and `time_series_array.obj` objects.

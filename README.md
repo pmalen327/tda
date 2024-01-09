@@ -31,3 +31,7 @@ The pipeline is structured as follows:\
     3. a simplex tree object is computed from the distance matrix\
     \
     4. a persistence barcode plot is generated and returned from the simplex tree object\
+\
+\
+\
+This pipeline was originally used as part of my M.S. project, but the applications are not limited to ECG data.
